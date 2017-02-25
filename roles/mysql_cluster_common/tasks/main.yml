@@ -1,0 +1,27 @@
+- name: Install libaiol dependency
+  apt: pkg=libaio1
+
+  #- name: download foo.conf
+  #get_url:
+  #   url: "{{ mysql_cluster_binaries }}" 
+  #   dest: /tmp/dst.deb
+  #   timeout: 600
+  #   mode: 0755
+
+  #- name: Download MySQL cluster binaries
+  #command: wget --continue -P /var/tmp "{{ mysql_cluster_binaries }}"
+
+             #there is a bug in Python3 installing DEB from https
+- name: Install MySQL cluster package
+  apt:
+          #deb: /tmp/dst.deb
+          deb: /vagrant/mysql.deb
+
+
+#environment:
+
+#- name: make a symlink to the /usr/local/bin
+#  file:
+#    src: /opt/mysql/server-5.7/bin/*
+#    dest: /usr/local/bin/
+#    state: link

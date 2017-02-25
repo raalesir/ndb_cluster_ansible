@@ -1,0 +1,38 @@
+
+- name: Create config dir "{{ cluster_config_dir }}"
+  file: 
+    path:  "{{ cluster_config_dir }}"
+    state: directory
+    mode: 0644
+
+- name: Copy config file config.ini
+  template: 
+            src: config.ini.j2 
+            dest: "{{ cluster_config_file }}"
+  #       mode: 0644
+
+- name: Install init file
+  template:
+   src: ndb_mgmd.init.j2
+   dest: "{{ ndb_mgmd_start }}"
+   mode: 0755
+
+- name: Activate init file
+  service:
+     name:  ndb_mgmd
+     enabled: yes
+     state: started
+
+
+
+
+#- name: Copy rc.local to the host
+#  template:
+#            src: rc.local.j2
+#            dest: "{{ rc_local }}"
+#
+#- name: Activate rc-local.service
+#  service:
+#     name:  rc-local
+#     enabled: yes
+#     state: started

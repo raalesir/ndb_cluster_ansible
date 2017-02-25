@@ -1,0 +1,11 @@
+---
+
+cluster_data_conf_file: /etc/my.cnf
+cluster_data_conf_dir: /etc
+cluster_config_dir: /var/lib/mysql-cluster
+
+mysql_cluster_installation_ndbd: "{{mysql_cluster_base_dir}}/bin/ndbd"
+mysql_install_db: "{{mysql_cluster_base_dir}}/bin/mysqld"
+mysql_server: "{{mysql_cluster_base_dir}}/support-files/mysql.server"
+mysql: "{{mysql_cluster_base_dir}}/bin/mysql"
+rc_local: /etc/rc.local

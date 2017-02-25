@@ -1,0 +1,7 @@
+[mysql_cluster]
+
+{% for host in groups["all"] %}
+    {% if  hostvars[host]['role'] == 'manager' %}
+        ndb-connectstring={{ hostvars[host]['ansible_ssh_host'] }}
+    {% endif %}
+{% endfor %}

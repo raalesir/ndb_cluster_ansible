@@ -1,0 +1,7 @@
+---
+
+cluster_config_dir: /var/lib/mysql-cluster
+cluster_config_file: "{{ cluster_config_dir }}/config.ini"
+mysql_cluster_installation_bin: "{{mysql_cluster_base_dir}}/bin/ndb_mgmd"
+ndb_mgmd_start: /etc/init.d/ndb_mgmd
+rc_local: /etc/rc.local

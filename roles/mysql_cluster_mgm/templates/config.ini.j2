@@ -1,0 +1,34 @@
+[ndbd default]
+# Options affecting ndbd processes on all data nodes:
+NoOfReplicas=1    # Number of replicas
+DataMemory=80M    # How much memory to allocate for data storage
+IndexMemory=18M   # How much memory to allocate for index storage
+# For DataMemory and IndexMemory, we have used the
+# default values. Since the "world" database takes up
+# only about 500KB, this should be more than enough for
+# this example Cluster setup.
+
+{% for host in groups["all"] %}
+    {% if  hostvars[host]['role'] == 'manager' %}
+        [ndb_mgmd]
+        hostname={{ hostvars[host]['ansible_ssh_host'] }}
+        datadir= {{ cluster_config_dir }} #/var/lib/mysql-cluster
+    {% endif %}
+{% endfor %}
+
+{% for host in groups["all"] %}
+    {% if  hostvars[host]['role'] == 'datanode' %}
+        [ndbd]
+        hostname={{ hostvars[host]['ansible_ssh_host'] }}
+        datadir= {{ cluster_data_dir }}
+    {% endif %}
+{% endfor %}
+
+{% for host in groups["all"] %}
+    {% if  hostvars[host]['role'] == 'manager' %}
+        [mysqld]
+        hostname={{ hostvars[host]['ansible_ssh_host'] }}
+        #hostname={{ ansible_ssh_host }}  # In our case the MySQL server/client is on the same Droplet as the cluster manager
+    {% endif %}
+{% endfor %}
+

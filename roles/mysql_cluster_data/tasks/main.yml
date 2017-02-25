@@ -1,0 +1,32 @@
+---
+
+- name: Create data dir  "{{ cluster_data_dir }}"
+  file:
+    path:  "{{ cluster_data_dir }}"
+    state: directory
+    recurse: yes
+    mode: 0644
+
+- name: Create conf dir  "{{ cluster_data_conf_dir }}"
+  file:
+    path:  "{{ cluster_data_conf_dir }}"
+    state: directory
+#    mode: 0755
+
+
+- name: Create config file '/etc/my.cnf.j2'
+  template: 
+            src: etc/my.cnf.j2
+            dest: "{{ cluster_data_conf_file }}"
+  #       mode: 0644
+
+- name: Copy rc.local to the host
+  template:
+            src: etc/rc.local.j2
+            dest: "{{ rc_local }}"
+
+- name: Activate rc-local.service
+  service:
+     name:  rc-local
+     enabled: yes
+     state: started

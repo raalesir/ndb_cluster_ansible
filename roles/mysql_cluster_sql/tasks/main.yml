@@ -1,0 +1,72 @@
+---
+
+- name: Create config file '/etc/my.cnf'
+  template: 
+            src: etc/my.cnf.j2
+            dest: "{{ cluster_data_conf_file }}"
+  #       mode: 0644
+
+#- name: Copy rc.local to the host
+#  template:
+#            src: etc/rc.local.j2
+#            dest: "{{ rc_local }}"
+#
+#- name: Activate rc-local.service
+#  service:
+#     name:  rc-local
+#     enabled: yes
+#     state: started
+
+- name: Create mysql group
+  group:
+   name: mysql
+   system: yes
+   state: present
+
+- name: Create myslq user
+  user:
+   name: mysql
+   system: yes
+   createhome: no
+   group: mysql
+
+#- name: create the default database
+#  command: "{{ mysql_install_db }} --initialize --user=mysql --datadir={{cluster_data_dir}}/user.frm"
+
+# copy does  not work weird bug......
+#- name: copy mysql.serve to /etc/init.d
+#  copy:
+#    src: "{{ mysql_server }}"
+#    dest: /etc/init.d/mysqld
+#    #owner: foo
+#    #group: foo
+#    #mode: 0644
+
+- name: copy mysql.serve to /etc/init.d
+  command:  cp "{{ mysql_server }}" /etc/init.d/mysqld
+
+# that was the isssue
+- name: create /var/lib/mysql-files
+  file:
+   path: /var/lib/mysql-files
+   state: directory
+   mode: 0755
+
+- name: create the default database.
+  command:  "{{mysql_cluster_base_dir}}/scripts/mysql_install_db --user=mysql creates={{mysql_cluster_base_dir}}/data/"
+
+#- name: Set permissions
+#  shell: chown -R mysql "{{ cluster_config_dir }}" # && chgrp -R mysql "{{ cluster_config_dir }}"
+
+- name: enable mysqld.service
+  service:
+     name:  mysqld
+     enabled: yes
+     state: started
+
+- name: make symbolic link for mysql
+  file:
+   src:  "{{ mysql }}"
+   dest: /usr/bin/mysql
+   state: link
+

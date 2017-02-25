@@ -1,0 +1,7 @@
+---
+
+cluster_data_conf_file: /etc/my.cnf
+cluster_data_conf_dir: /etc
+
+mysql_cluster_installation_ndbd: "{{mysql_cluster_base_dir}}/bin/ndbd"
+rc_local: /etc/rc.local

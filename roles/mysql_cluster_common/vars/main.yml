@@ -1,0 +1,7 @@
+---
+
+mysql_version: 5.6
+mysql_cluster_base_dir: /opt/mysql/server-{{mysql_version}}
+
+#mysql_cluster_binaries: https://dev.mysql.com/get/Downloads/MySQL-Cluster-7.5/mysql-cluster-gpl-7.5.5-debian8-x86_64.deb
+cluster_data_dir: /usr/local/mysql/data
