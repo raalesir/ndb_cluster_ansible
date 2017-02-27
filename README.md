@@ -64,10 +64,30 @@ should look like:
 ```
 The keys `id_rsa` and `id_rsa.pub` must be created by the user.
 
-The the best case scenario it is enough to issue:
+If after launching
 ```
 vagrant up --provision
 ```
+you cat see:
+```
+ndb_mgm> show
+Cluster Configuration
+---------------------
+[ndbd(NDB)]	2 node(s)
+id=2	@192.168.1.11  (mysql-5.6.35 ndb-7.4.14, Nodegroup: 0, *)
+id=3	@192.168.1.12  (mysql-5.6.35 ndb-7.4.14, Nodegroup: 1)
 
-Instructions for other cases are to be created :)
-And the repo in general must be improved...
+[ndb_mgmd(MGM)]	1 node(s)
+id=1	@192.168.1.10  (mysql-5.6.35 ndb-7.4.14)
+
+[mysqld(API)]	1 node(s)
+id=4	@192.168.1.13  (mysql-5.6.35 ndb-7.4.14)
+```
+then you are LUCKY.
+
+Otherwise -- start to complain!
+
+Actually you should   ssh first to `ssh` to the nodes of trouble and try  to
+start services manually. For datanodes it is `sudo /etc/rc.local`. For `sql`
+and `management node`  it  is `sudo service mysqld` and `sudo service ndb_mgmd`
+correspondingly.
