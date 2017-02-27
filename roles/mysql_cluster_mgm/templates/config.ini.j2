@@ -25,7 +25,7 @@ IndexMemory=18M   # How much memory to allocate for index storage
 {% endfor %}
 
 {% for host in groups["all"] %}
-    {% if  hostvars[host]['role'] == 'manager' %}
+    {% if  hostvars[host]['role'] == 'sql' %}
         [mysqld]
         hostname={{ hostvars[host]['ansible_ssh_host'] }}
         #hostname={{ ansible_ssh_host }}  # In our case the MySQL server/client is on the same Droplet as the cluster manager

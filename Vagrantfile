@@ -27,20 +27,38 @@ Vagrant.configure(2) do |config|
      #vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-     vb.memory = "2048"
+     vb.memory = "1024"
      vb.name = "mysql_server_manager"
     end
   end
-##########################################3
-  config.vm.define "mysql_datanode1" do |slave|
-    slave.vm.provider "virtualbox" do |vb|
-     vb.memory = "2048"
-     vb.name = "mysql_node1"
+  #######################################
+  config.vm.define "sql_box" do |master|
+    master.vm.box = "ubuntu/xenial64"
+    master.vm.hostname = "sql"
+    master.vm.network :private_network, ip: "192.168.1.13"
+    master.vm.provider "virtualbox" do |vb|
+
+     # Display the VirtualBox GUI when booting the machine
+     #vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+     vb.memory = "1024"
+     vb.name = "mysql_server_sql"
     end
-    slave.vm.network :private_network, ip: "192.168.1.11"
-    slave.vm.hostname = "node1"
-    slave.vm.box = "ubuntu/xenial64"
-    slave.vm.network :forwarded_port, guest:8081, host:8081
+  end
+##########################################3
+ N = 2
+ (1..N).each do |machine_id|
+	  config.vm.define "mysql_datanode#{machine_id}" do |slave|
+	    slave.vm.provider "virtualbox" do |vb|
+	     vb.memory = "1024"
+	     vb.name = "mysql_node#{machine_id}"
+	    end
+	    slave.vm.network :private_network, ip: "192.168.1.#{10+machine_id}"
+	    slave.vm.hostname = "node#{machine_id}"
+	    slave.vm.box = "ubuntu/xenial64"
+	    #slave.vm.network :forwarded_port, guest:8081, host:8081
+	  end
   end
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
