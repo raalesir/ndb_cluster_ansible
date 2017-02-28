@@ -88,7 +88,7 @@ then you are LUCKY.
 
 Otherwise -- start to complain!
 
-Actually you should   ssh first to `ssh` to the nodes of trouble and try  to
+Actually you should  to `ssh` first to the nodes of trouble and try  to
 start services manually. For datanodes it is `sudo /etc/rc.local`. For `sql`
 and `management node`  it  is `sudo service mysqld` and `sudo service ndb_mgmd`
 correspondingly.
