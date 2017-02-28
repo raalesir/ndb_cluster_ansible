@@ -2,7 +2,7 @@
 
 The purpose is to test and play with the `NDB MySQL cluster` installation.
 
-The goal is to make installation as automated as possible with Ansible. 
+The goal is to make installation as automated as possible with `Ansible`.
 Tested on:
 ```
 ❯ vagrant --version
@@ -12,11 +12,11 @@ Oracle VM VirtualBox Manager 5.1.14
 ```
 
 Some ideas are from here: https://github.com/mdom/ansible-mysql-cluster
-and at
+and here
 [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-create-a-multi-node-mysql-cluster-on-ubuntu-16-04).
 The former suffer from a lot of hard-coding and repeated code, and the
 latter from not being automated at all. Another source of information is the
-offcial instructions:
+official instructions:
 https://dev.mysql.com/doc/refman/5.6/en/mysql-cluster.html
 
 The present version has the following improvements:
@@ -28,7 +28,7 @@ The present version has the following improvements:
 
 
 Thing like
-`config.ssh.insert_key = false` in the Vagrantfile doesn't work for me for a some
+`config.ssh.insert_key = false` in the `Vagrantfile` doesn't work for me for a some
 reason. So i generated key-pair in the `Vagrantfile` directory and
 use `Ansible` task to deliver *both* parts to the `$HOME/.ssh/` on each host.
 
@@ -68,7 +68,8 @@ If after launching
 ```
 vagrant up --provision
 ```
-you cat see:
+you type `sudo /opt/mysql/server-5.6/bin/ndb_mgm` on the `192.168.1.10`
+and can see:
 ```
 ndb_mgm> show
 Cluster Configuration
